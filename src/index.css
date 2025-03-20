@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .auth-input {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+  }
+
+  .auth-button {
+    @apply w-full px-4 py-2 text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50;
+  }
+
+  .social-button {
+    @apply w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg bg-white hover:bg-gray-50;
+  }
+} 
