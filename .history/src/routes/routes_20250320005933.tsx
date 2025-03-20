@@ -6,6 +6,7 @@ import Home from '@/pages/Home'
 import SearchTrips from '@/pages/SearchTrips'
 import TripDetails from '@/pages/TripDetails'
 import Checkout from '@/pages/Checkout'
+import Cart from '@features/cart/components/Cart'
 import BookingConfirmation from '@/pages/BookingConfirmation'
 import CartPage from '@features/cart/components/CartPage'
 
