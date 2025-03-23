@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom'
-import { useCartStore } from '../store/cartStore'
 import { useTripDetails } from '../../trips/hooks/useTrips'
+import { CartItem } from '../../trips/types/index'
 
 interface MiniCartProps {
   isOpen: boolean
   onClose: () => void
+  items: CartItem[]
+  onRemoveItem: (tripId: string) => void
 }
 
-const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
-  const { items, removeFromCart } = useCartStore()
-
+const MiniCart = ({ isOpen, onClose, items, onRemoveItem }: MiniCartProps) => {
   if (!isOpen) return null
 
   if (items.length === 0) {
@@ -74,7 +74,7 @@ const MiniCart = ({ isOpen, onClose }: MiniCartProps) => {
                     Qty: {item.quantity}
                   </p>
                   <button
-                    onClick={() => removeFromCart(item.tripId)}
+                    onClick={() => onRemoveItem(item.tripId)}
                     className="text-sm text-red-600 hover:text-red-800"
                   >
                     Remove

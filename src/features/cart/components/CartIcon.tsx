@@ -4,7 +4,7 @@ import MiniCart from './MiniCart'
 
 const CartIcon = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const items = useCartStore(state => state.items)
+  const { items, removeFromCart } = useCartStore()
   
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
   
@@ -44,7 +44,12 @@ const CartIcon = () => {
             onClick={() => setIsOpen(false)}
           />
           <div className="absolute right-0 mt-2 z-50">
-            <MiniCart isOpen={isOpen} onClose={() => setIsOpen(false)} />
+            <MiniCart 
+              isOpen={isOpen} 
+              onClose={() => setIsOpen(false)}
+              items={items}
+              onRemoveItem={removeFromCart}
+            />
           </div>
         </>
       )}
