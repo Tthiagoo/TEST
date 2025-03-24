@@ -1,10 +1,16 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { CartItem } from '@features/trips/types'
+// Define CartItem locally if not exported from '@features/trips/types'
+interface CartItem {
+  tripId: string
+  quantity: number
+  price: number
+  passengers: number
+}
 
 interface CartState {
   items: CartItem[]
-  addToCart: (tripId: string) => void
+  addToCart: (item: { tripId: string, quantity: number, price: number, passengers: number }) => void
   removeFromCart: (tripId: string) => void
   updateQuantity: (tripId: string, quantity: number) => void
   clearCart: () => void
@@ -16,7 +22,7 @@ export const useCartStore = create<CartState>()(
     (set, get) => ({
       items: [],
       
-      addToCart: (tripId) =>
+      addToCart: ({ tripId, quantity, price, passengers }) =>
         set((state) => {
           const existingItem = state.items.find((item) => item.tripId === tripId)
           
@@ -31,7 +37,7 @@ export const useCartStore = create<CartState>()(
           }
           
           return {
-            items: [...state.items, { tripId, quantity: 1 }],
+            items: [...state.items, { tripId, quantity, price, passengers }],
           }
         }),
       
@@ -66,4 +72,4 @@ export const useCartStore = create<CartState>()(
       name: 'cart-storage',
     }
   )
-) 
+)

@@ -36,7 +36,7 @@ const SearchTrips = () => {
   if (!trips?.length) {
     return (
       <div className="text-center py-8">
-        <h2 className="text-xl font-semibold mb-2">No trips found</h2>
+        <h2 className="text-xl font-semibold mb-2">nenhuma viagem encontrada</h2>
         <p className="text-gray-600">Try adjusting your search criteria</p>
       </div>
     )
@@ -58,7 +58,7 @@ const SearchTrips = () => {
                 tripId: trip.id,
                 quantity: searchQuery.passengers,
                 price: trip.price,
-                passengers: []
+                passengers: searchQuery.passengers
               })
             }}
           />
@@ -68,4 +68,4 @@ const SearchTrips = () => {
   )
 }
 
-export default SearchTrips 
+export default SearchTrips
