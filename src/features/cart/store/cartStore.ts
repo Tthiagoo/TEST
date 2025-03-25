@@ -10,18 +10,38 @@ interface CartItem {
 
 interface CartState {
   items: CartItem[]
+  discountStrategy: DiscountStrategy // Add this line
   addToCart: (item: { tripId: string, quantity: number, price: number, passengers: number }) => void
   removeFromCart: (tripId: string) => void
   updateQuantity: (tripId: string, quantity: number) => void
   clearCart: () => void
   getTotal: () => number
+  setDiscountStrategy: (strategy: DiscountStrategy) => void
+}
+
+interface DiscountStrategy {
+  calculate(total: number): number;
+}
+
+class NoDiscount implements DiscountStrategy {
+  calculate(total: number): number {
+    return total;
+  }
+}
+
+class PercentageDiscount implements DiscountStrategy {
+  constructor(private percentage: number) {}
+  calculate(total: number): number {
+    return total - total * (this.percentage / 100);
+  }
 }
 
 export const useCartStore = create<CartState>()(
   persist(
     (set, get) => ({
       items: [],
-      
+      discountStrategy: new NoDiscount(), // Default strategy
+
       addToCart: ({ tripId, quantity, price, passengers }) =>
         set((state) => {
           const existingItem = state.items.find((item) => item.tripId === tripId)
@@ -62,10 +82,17 @@ export const useCartStore = create<CartState>()(
         }),
       
       clearCart: () => set({ items: [] }),
-      
+
+      setDiscountStrategy: (strategy: DiscountStrategy) =>
+        set((state) => ({ ...state, discountStrategy: strategy })),
+
       getTotal: () => {
-        const state = get()
-        return state.items.reduce((total, item) => total + item.price * item.quantity, 0)
+        const state = get();
+        const total = state.items.reduce(
+          (sum, item) => sum + item.price * item.quantity,
+          0
+        );
+        return state.discountStrategy.calculate(total);
       },
     }),
     {

@@ -1,20 +1,15 @@
-import { Link } from 'react-router-dom'
-import { Trip } from '../types'
+import { Link } from 'react-router-dom';
+import { Trip } from '../types';
+import { formatDate } from '@/utils/dateUtils';
+ // Ensure the file exists and the path is correct
 
 interface TripCardProps {
-  trip: Trip
-  onAddToCart: () => void
+  trip: Trip;
+  onAddToCart: () => void;
 }
 
 const TripCard = ({ trip, onAddToCart }: TripCardProps) => {
-  const formattedDate = new Date(trip.departureDate).toLocaleDateString('pt-BR', {
-    weekday: 'short',
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+  const formattedDate = formatDate(trip.departureDate);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -83,7 +78,7 @@ const TripCard = ({ trip, onAddToCart }: TripCardProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TripCard 
+export default TripCard;

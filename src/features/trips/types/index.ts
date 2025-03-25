@@ -18,12 +18,12 @@ export interface CartItem {
 }
 
 export interface Passenger {
-  firstName: string
-  lastName: string
-  documentType: 'id' | 'passport'
-  documentNumber: string
-  email?: string
-  phone?: string
+  firstName: string;
+  lastName: string;
+  documentType: 'id' | 'passport' | 'driver_license'; // Extended types
+  documentNumber: string;
+  email?: string;
+  phone?: string;
 }
 
 export interface SearchParams {
@@ -42,8 +42,8 @@ export interface PaymentInfo {
 }
 
 export interface BookingDetails {
-  tripId: string
-  passengers: Passenger[]
-  paymentInfo: PaymentInfo
-  totalAmount: number
-} 
+  tripId: string;
+  passengers: Passenger[];
+  paymentInfo: PaymentInfo;
+  totalAmount: number;
+}

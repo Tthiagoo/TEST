@@ -31,8 +31,12 @@ export const useCheckAvailability = () => {
   )
 }
 
-export const useCreateBooking = () => {
-  return useMutation(
-    (bookingDetails: BookingDetails) => tripsService.createBooking(bookingDetails)
-  )
-} 
+export interface TripsService {
+  createBooking: (details: BookingDetails) => Promise<{ bookingId: string }>;
+}
+
+export const useCreateBooking = (service: TripsService = tripsService) => {
+  return useMutation((bookingDetails: BookingDetails) =>
+    service.createBooking(bookingDetails)
+  );
+};
